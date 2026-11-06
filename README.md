@@ -2,7 +2,7 @@
 
 Fuel aid that only buys fuel: each jeepney's card gets a Noir escrow run by its own AI agent, which decides every fill, pays the station on the spot, and asks the program for a top-up through Velo when it runs low. Built for programs that give fuel aid to public utility vehicle (PUV) drivers.
 
-**Live website:** https://TODO.vercel.app
+**Live website:** https://pasada-eosin.vercel.app (API: https://pasada-server.onrender.com/api/health; free Render instance, first load after idle can take ~30 s)
 **Demo video (2 min):** https://TODO
 **Pitch deck:** https://TODO
 **Team:** TODO Name (Discord `TODO`), TODO Name (Discord `TODO`)
@@ -65,16 +65,18 @@ flowchart LR
 - **Files:**
   - `new Velo(...)` and `checkout.sessions.create` — [`velo/client.ts#L45-L51`](apps/server/src/velo/client.ts#L45-L51)
   - `paymentIntents.retrieve` (status poller) — [`velo/client.ts#L67`](apps/server/src/velo/client.ts#L67), [`velo/poller.ts#L14`](apps/server/src/velo/poller.ts#L14)
-  - `Velo.webhooks.verify` on the raw body — [`routes/veloWebhook.ts#L18`](apps/server/src/routes/veloWebhook.ts#L18)
+  - `Velo.webhooks.verify` on the raw body — [`routes/veloWebhook.ts#L27`](apps/server/src/routes/veloWebhook.ts#L27). The dashboard sends a flatter body than the SDK's types expect, so after the SDK has matched the HMAC we read the intent id ourselves and confirm amount and status with `paymentIntents.retrieve` ([`#L64`](apps/server/src/routes/veloWebhook.ts#L64)); see [`docs/DEVLOG.md`](docs/DEVLOG.md).
   - The agent's top-up request and the escrow refill after payment — [`velo/topups.ts`](apps/server/src/velo/topups.ts)
 
 ## Testnet proof
 
-TODO: paste from [`docs/testnet-proof.md`](docs/testnet-proof.md).
+All from the **live site**, Stellar Testnet. Full log (setup, smoke test, local and live runs): [`docs/testnet-proof.md`](docs/testnet-proof.md).
 
-- Agent payment (`authorize`): https://stellar.expert/explorer/testnet/tx/TODO
-- Station claim: https://stellar.expert/explorer/testnet/tx/TODO
-- Escrow top-up after a Velo payment (`fundEscrow`): https://stellar.expert/explorer/testnet/tx/TODO
+- Agent payment (`authorize`, S1: 40 L, 4 XLM to Bituin Fuels): https://stellar.expert/explorer/testnet/tx/a7d217fc67d3f4d9048c614aa832a836f85ad0633cd9fb1f3c286d7b404d88e3
+- Station claim (S1): https://stellar.expert/explorer/testnet/tx/f2f0c3e0ae521e231aa4649fc7377ac31acce0911c6f1bb554aab6d83f6ae214
+- Capped payment (S2: asked 80 L, tank holds 50 L): https://stellar.expert/explorer/testnet/tx/58371148ada9c3408e8933b21d22254db3448df593c3492a186c0db0982ace4b
+- Escrow top-up after a Velo payment (`fundEscrow`, S5: 13 XLM, Velo checkout confirmed by signed webhook): https://stellar.expert/explorer/testnet/tx/d4db905641a5b8e61116aa14f8664fc5a4ee80695be64262d73c4e11f1d50b22
+- The held fill paid automatically once the funds arrived (S5): https://stellar.expert/explorer/testnet/tx/3fdfd925663486c813d25864363fc7b0f46cdd6c1c06a8be2e8db74241c7c67c
 
 ## Repo structure
 
@@ -91,6 +93,7 @@ docs/              design docs, testnet proof, screenshots
 1. Prerequisites: Node ≥ 22.23.4 (or ≥ 24.22.1); a Velo Testnet API key and webhook secret from velo-build.dev; a Testnet wallet (e.g. the Noir Chrome extension) to act as the treasurer.
 2. `npm install` at the root.
 3. `cp apps/server/.env.example apps/server/.env` and `cp apps/web/.env.example apps/web/.env`; fill `VELO_API_KEY`, `VELO_WEBHOOK_SECRET`, `ADMIN_TOKEN`; then `npm run keys` (creates and funds the Testnet accounts) and `npm run setup:chain` (registers the demo jeepneys on Noir).
+   In the Velo console, a new project must be **registered on-chain** and **Velo Pay activated** before checkouts work (otherwise the API returns 401 "Payment access not activated"). `npx tsx apps/server/scripts/velo-check.ts` creates a 1 XLM test checkout to confirm.
 4. `npm run dev` → open http://localhost:5173.
 5. Optional offline mode (no Stellar, no Velo): `npm run dev:fake` runs the same agents against an in-memory chain and a local test checkout. It is only for UI work; the live site always runs on Testnet.
 6. Tests: `npm test` (rule engine, top-up planner, vehicle agent against a fake chain).

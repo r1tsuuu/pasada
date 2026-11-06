@@ -3,6 +3,7 @@
 One line per surprise: where the real SDK, Velo dashboard or Testnet behaved differently from the
 docs, and what we changed. Newest first.
 
+- 2026-11-06 23:20 — Velo: a new project needed two dashboard steps before checkouts worked (`Register Project On-Chain`, then `Activate Velo Pay`); before that the API returned 401 "Payment access not activated". A 1 XLM test checkout now returns status `created` and `receiverAddress` = the program owner (GBHC…IYZG), as planned in §12.1. Check: `npx tsx apps/server/scripts/velo-check.ts`.
 - 2026-11-06 21:35 — Built in a workspace that can't reach Stellar or Velo. Everything is verified against `FakeChain`/`FakeVelo` (`npm run dev:fake`, `npm test`); the first real Testnet run is `npm run keys && npm run setup:chain && npm run smoke` on a laptop.
 - 2026-11-06 21:30 — `@carts1024/velo-sdk@1.0.0` was published 2026-11-05 with the same API we use; we stay on `0.1.0-alpha.4` because the handbook says to use the alpha tag.
 - 2026-11-06 21:25 — `NoirAgentClient.checkPayment` returns `expired` as a fallback reason when the contract refuses for a reason it can't see; we map `expired` to `PROGRAM_EXPIRED`.

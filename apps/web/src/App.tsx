@@ -69,7 +69,7 @@ export default function App() {
           <p className="rounded-xl bg-refused-bg px-4 py-3 text-[15px] text-refused">{error}</p>
         </div>
       )}
-      <main className="mx-auto grid max-w-[1440px] gap-8 px-4 py-6 md:px-6 lg:grid-cols-[minmax(320px,380px)_minmax(0,1fr)_minmax(340px,440px)]">
+      <main className="mx-auto grid max-w-[1440px] gap-8 px-4 py-6 md:px-6 lg:grid-cols-3 lg:gap-6 xl:grid-cols-[minmax(320px,380px)_minmax(0,1fr)_minmax(340px,440px)] xl:gap-8">
         {config ? (
           <>
             <PumpPanel config={config} state={state} onDone={refresh} />

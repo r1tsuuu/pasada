@@ -36,3 +36,11 @@ Copy the best three into the README's "Testnet proof" section.
 | 11/7/2026, 00:30 | LIVE S5: fundEscrow 13 XLM for J3 after the Velo payment | https://stellar.expert/explorer/testnet/tx/d4db905641a5b8e61116aa14f8664fc5a4ee80695be64262d73c4e11f1d50b22 |
 | 11/7/2026, 00:30 | LIVE S5: released held fill, J3 authorizePayment 40 L / 4 XLM to S1 | https://stellar.expert/explorer/testnet/tx/3fdfd925663486c813d25864363fc7b0f46cdd6c1c06a8be2e8db74241c7c67c |
 | 11/7/2026, 00:30 | LIVE S5: S1 station claim | https://stellar.expert/explorer/testnet/tx/e7928edaee06d42948e5e138c88ccc0aed67c59f8ceb25331e560c83dc19c716 |
+| 11/7/2026, 00:25:34 | J1 fundEscrow 4 XLM | https://stellar.expert/explorer/testnet/tx/053c37d55c63dba355ca5353c242eace53aa70d64d08cc8d7f628c1dac106ae4 |
+| 11/7/2026, 00:26:16 | J2 fundEscrow 5 XLM | https://stellar.expert/explorer/testnet/tx/57b917c57a88256f610dbcbddbd545e4795b7b09b132b082328a18c1b5927ceb |
+| 11/7/2026, 00:26:37 | J3 defundEscrow back to 3 XLM | https://stellar.expert/explorer/testnet/tx/608ba1174add11edf762befa43618c3bb5c9fc513339354d9e5338e7e5437e5a |
+| 11/7/2026, 00:50 | LIVE re-run after the Render redeploy cleared the log: S1 authorize | https://stellar.expert/explorer/testnet/tx/fc34995b8343d6d049a40ca7751f765bfd42bbf93ccab4ee21f756395c5c6e0a |
+| 11/7/2026, 00:50 | LIVE re-run: S2 capped authorize | https://stellar.expert/explorer/testnet/tx/d3f588834b3de6bd855c2dd21f968015ddcfaa8fc78e4d78189b389c8e8303c6 |
+| 11/7/2026, 01:00 | LIVE re-run S5: fundEscrow 13 XLM after Velo payment (confirmed via poll) | https://stellar.expert/explorer/testnet/tx/dd8dec0f828eaeedac3e62847f5b4e2b1e8ba51db455e987521c776c268f9324 |
+| 11/7/2026, 01:00 | LIVE re-run S5: released fill, J3 authorize 40 L | https://stellar.expert/explorer/testnet/tx/ba6277dc522dab11a72b2db13da9db18ef3c9edfa2a9abc04b77c6d7bd7cf582 |
+| 11/7/2026, 01:00 | LIVE re-run S5: S1 claim | https://stellar.expert/explorer/testnet/tx/2605e0c36b37723e88891abe863cdad236da9335138805ec6f3c35ca3a4b9e11 |

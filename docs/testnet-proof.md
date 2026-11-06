@@ -24,3 +24,15 @@ Copy the best three into the README's "Testnet proof" section.
 | 11/6/2026, 23:40 | S5 (local): fundEscrow 13 XLM for J3 after the Velo payment (confirmed via poll) | https://stellar.expert/explorer/testnet/tx/35988430e3d65153d6dba58fc38ab186baff290dd05a80029d64d7f72afdfa5c |
 | 11/6/2026, 23:40 | S5 (local): released held fill, J3 authorizePayment 40 L / 4 XLM to S1 | https://stellar.expert/explorer/testnet/tx/9b069dced4e92670c1171c1ebaa4b82406f98cefa1fd3d9421bbb50964910012 |
 | 11/6/2026, 23:40 | S5 (local): S1 station claim | https://stellar.expert/explorer/testnet/tx/68a6a58d0b80b140c9f3840c06bef9515663ec5b3da047ad92ddbf746abe6875 |
+| 11/6/2026, 23:50:43 | J1 fundEscrow 4.1 XLM | https://stellar.expert/explorer/testnet/tx/217ee44ec5460b71b20ed0bcc372c74072949d2712910a2758700c7a6bc6d42b |
+| 11/6/2026, 23:51:18 | J2 fundEscrow 5 XLM | https://stellar.expert/explorer/testnet/tx/710449dfd553328831fb005ae33d0c3571ac0778441d1f72bfa91a13f0dda815 |
+| 11/6/2026, 23:51:41 | J3 defundEscrow back to 3 XLM | https://stellar.expert/explorer/testnet/tx/ec3dd8815b4b6462e98e8c3a34a31873a8093fd1e9ec8df38549b94ffa719f8c |
+| 11/7/2026, 00:05 | LIVE S1: J1 authorizePayment 40 L / 4 XLM to S1 | https://stellar.expert/explorer/testnet/tx/a7d217fc67d3f4d9048c614aa832a836f85ad0633cd9fb1f3c286d7b404d88e3 |
+| 11/7/2026, 00:05 | LIVE S1: S1 station claim | https://stellar.expert/explorer/testnet/tx/f2f0c3e0ae521e231aa4649fc7377ac31acce0911c6f1bb554aab6d83f6ae214 |
+| 11/7/2026, 00:10 | LIVE S2: J2 authorizePayment capped 80→50 L / 5 XLM to S2 | https://stellar.expert/explorer/testnet/tx/58371148ada9c3408e8933b21d22254db3448df593c3492a186c0db0982ace4b |
+| 11/7/2026, 00:10 | LIVE S2: S2 station claim | https://stellar.expert/explorer/testnet/tx/9c675fc6d0d97fda627f0287b2de1beaa0486d6ceb27c67c748411be8c1f5c1b |
+| 11/7/2026, 00:10 | LIVE S3: J1 30 L held TOO_SOON; LIVE S4: J2 at S3 refused UNACCREDITED_STATION (no tx, by design) | — |
+| 11/7/2026, 00:30 | LIVE S5: Velo checkout paid 13 XLM, confirmed via **webhook** | https://www.velo-build.dev/pay/jx7ads3yhm9hrfm6zvqr8p8m8x8hqzqz |
+| 11/7/2026, 00:30 | LIVE S5: fundEscrow 13 XLM for J3 after the Velo payment | https://stellar.expert/explorer/testnet/tx/d4db905641a5b8e61116aa14f8664fc5a4ee80695be64262d73c4e11f1d50b22 |
+| 11/7/2026, 00:30 | LIVE S5: released held fill, J3 authorizePayment 40 L / 4 XLM to S1 | https://stellar.expert/explorer/testnet/tx/3fdfd925663486c813d25864363fc7b0f46cdd6c1c06a8be2e8db74241c7c67c |
+| 11/7/2026, 00:30 | LIVE S5: S1 station claim | https://stellar.expert/explorer/testnet/tx/e7928edaee06d42948e5e138c88ccc0aed67c59f8ceb25331e560c83dc19c716 |

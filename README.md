@@ -45,23 +45,28 @@ flowchart LR
 
 - **SDK:** `@noirx402/agent-sdk@0.3.0`, default `TESTNET` contracts (no override).
 - **Contracts called:** `device_registry` (`CAC4…QHU5`), `agent_registry` (`CCMZ…EBV`), `payment_escrow` (`CC7E…BFS`).
-- **Methods used** (TODO: replace with permalinks to the final commit, with line numbers):
+- **Client:** `new NoirAgentClient()` with no network override — [`noirChain.ts#L27`](packages/agent/src/noirChain.ts#L27).
+- **Methods used:**
 
 | Method | Where | Why |
 | --- | --- | --- |
-| `execute({ kind: 'registerDevice' })` | [`noirChain.ts#L?`](packages/agent/src/noirChain.ts) | Link each jeepney card to the program wallet and its agent |
-| `execute({ kind: 'registerAgent' })` | [`noirChain.ts#L?`](packages/agent/src/noirChain.ts) | Per-fill cap = tank × subsidy rate; expiry = program end |
-| `execute({ kind: 'fundEscrow' })` | [`noirChain.ts#L?`](packages/agent/src/noirChain.ts) | Initial funding and every Velo-confirmed top-up |
-| `checkPayment` | [`noirChain.ts#L?`](packages/agent/src/noirChain.ts) | The agent's pre-payment check |
-| `authorizePayment` | [`noirChain.ts#L?`](packages/agent/src/noirChain.ts) | The agent pays the station |
-| `claim`, `getPendingBalance`, `watch` | [`stationAgent.ts#L?`](packages/agent/src/stationAgent.ts) | Station agent collects payments |
-| `getEscrowBalance`, `getPolicy` | [`noirChain.ts#L?`](packages/agent/src/noirChain.ts) | Low-balance detection and the dashboard |
+| `execute({ kind: 'registerDevice' })` | [`noirChain.ts#L63`](packages/agent/src/noirChain.ts#L63), run by [`setup-chain.ts`](apps/server/scripts/setup-chain.ts) | Link each jeepney card to the program wallet and its agent |
+| `execute({ kind: 'registerAgent' })` | [`noirChain.ts#L71`](packages/agent/src/noirChain.ts#L71) | Per-fill cap = tank × subsidy rate; expiry = program end |
+| `execute({ kind: 'fundEscrow' })` | [`noirChain.ts#L84`](packages/agent/src/noirChain.ts#L84), called after Velo confirms a top-up in [`topups.ts#L110`](apps/server/src/velo/topups.ts#L110) | Initial funding and every Velo-confirmed top-up |
+| `checkPayment` | [`noirChain.ts#L56`](packages/agent/src/noirChain.ts#L56), used by the agent in [`vehicleAgent.ts#L124`](packages/agent/src/vehicleAgent.ts#L124) | The agent's pre-payment check |
+| `authorizePayment` | [`noirChain.ts#L105`](packages/agent/src/noirChain.ts#L105), used in [`vehicleAgent.ts#L145`](packages/agent/src/vehicleAgent.ts#L145) | The agent pays the station |
+| `claim`, `getPendingBalance`, `watch` | [`noirChain.ts#L112`](packages/agent/src/noirChain.ts#L112), [`stationAgent.ts#L27`](packages/agent/src/stationAgent.ts#L27), [`stationAgent.ts#L55`](packages/agent/src/stationAgent.ts#L55) | Station agent collects payments |
+| `getEscrowBalance`, `getPolicy` | [`noirChain.ts#L48`](packages/agent/src/noirChain.ts#L48), [`vehicleAgent.ts#L169`](packages/agent/src/vehicleAgent.ts#L169) | Low-balance detection (the agent then requests money) and the dashboard |
 
 ## Velo integration
 
 - **SDK:** `@carts1024/velo-sdk@0.1.0-alpha.4`.
 - **What Velo does:** the vehicle agent's top-up requests (checkout sessions), payment status (`paymentIntents.retrieve` poller), and signed `payment.succeeded` webhooks that trigger the Noir escrow refill.
-- **Files** (TODO: permalinks): [`velo/client.ts`](apps/server/src/velo/client.ts), [`velo/topups.ts`](apps/server/src/velo/topups.ts), [`velo/poller.ts`](apps/server/src/velo/poller.ts), [`routes/veloWebhook.ts`](apps/server/src/routes/veloWebhook.ts).
+- **Files:**
+  - `new Velo(...)` and `checkout.sessions.create` — [`velo/client.ts#L45-L51`](apps/server/src/velo/client.ts#L45-L51)
+  - `paymentIntents.retrieve` (status poller) — [`velo/client.ts#L67`](apps/server/src/velo/client.ts#L67), [`velo/poller.ts#L14`](apps/server/src/velo/poller.ts#L14)
+  - `Velo.webhooks.verify` on the raw body — [`routes/veloWebhook.ts#L18`](apps/server/src/routes/veloWebhook.ts#L18)
+  - The agent's top-up request and the escrow refill after payment — [`velo/topups.ts`](apps/server/src/velo/topups.ts)
 
 ## Testnet proof
 
@@ -87,6 +92,8 @@ docs/              design docs, testnet proof, screenshots
 2. `npm install` at the root.
 3. `cp apps/server/.env.example apps/server/.env` and `cp apps/web/.env.example apps/web/.env`; fill `VELO_API_KEY`, `VELO_WEBHOOK_SECRET`, `ADMIN_TOKEN`; then `npm run keys` (creates and funds the Testnet accounts) and `npm run setup:chain` (registers the demo jeepneys on Noir).
 4. `npm run dev` → open http://localhost:5173.
+5. Optional offline mode (no Stellar, no Velo): `npm run dev:fake` runs the same agents against an in-memory chain and a local test checkout. It is only for UI work; the live site always runs on Testnet.
+6. Tests: `npm test` (rule engine, top-up planner, vehicle agent against a fake chain).
 
 ## Environment variables
 

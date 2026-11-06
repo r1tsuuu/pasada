@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1f2a44;
+  --color-ink-soft: #4a5672;
+  --color-ink-faint: #7b869c;
+  --color-paper: #f4f6f9;
+  --color-panel: #ffffff;
+  --color-line: #dde2ea;
+  --color-sign: #f2c230;
+  --color-sign-deep: #d9a514;
+  --color-ok: #1e7f4f;
+  --color-ok-bg: #e6f4ec;
+  --color-capped: #9a5b00;
+  --color-capped-bg: #fbf0dc;
+  --color-held: #2457c5;
+  --color-held-bg: #e7eefc;
+  --color-refused: #b4232f;
+  --color-refused-bg: #fbe9ea;
+  --color-failed: #59616f;
+  --color-failed-bg: #eceef1;
+  --color-display: #10202b;
+  --color-display-glow: #7cf0b1;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-sans: "Public Sans", system-ui, sans-serif;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-paper);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-held);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@keyframes arrive {
+  from {
+    background-color: #fff8db;
+  }
+  to {
+    background-color: #ffffff;
+  }
+}
+
+.arrive {
+  animation: arrive 1.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrive {
+    animation: none;
+  }
+  * {
+    transition: none !important;
+  }
+}

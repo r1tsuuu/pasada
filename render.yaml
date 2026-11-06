@@ -1,0 +1,38 @@
+# Render Blueprint for the Pasada server (Express + agents). Secrets are set in the Render dashboard.
+services:
+  - type: web
+    name: pasada-server
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.23.4
+      - key: WEB_ORIGIN
+        sync: false
+      - key: PUBLIC_WEB_URL
+        sync: false
+      - key: PUBLIC_SERVER_URL
+        sync: false
+      - key: PROGRAM_OWNER_SECRET
+        sync: false
+      - key: AGENT_J1_SECRET
+        sync: false
+      - key: AGENT_J2_SECRET
+        sync: false
+      - key: AGENT_J3_SECRET
+        sync: false
+      - key: STATION_S1_SECRET
+        sync: false
+      - key: STATION_S2_SECRET
+        sync: false
+      - key: STATION_S3_PUBLIC
+        sync: false
+      - key: VELO_API_KEY
+        sync: false
+      - key: VELO_WEBHOOK_SECRET
+        sync: false
+      - key: ADMIN_TOKEN
+        generateValue: true

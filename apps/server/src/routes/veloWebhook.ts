@@ -17,9 +17,12 @@ export function veloWebhookRoute(ctx: AppContext): Router {
     try {
       event = await Velo.webhooks.verify({ payload, signature: Array.isArray(sig) ? sig[0] : sig ?? null, secret: env.VELO_WEBHOOK_SECRET });
     } catch (err) {
-      if (err instanceof VeloWebhookSignatureVerificationError) return res.status(400).send('bad signature');
-      console.error('webhook verify error', err);
-      return res.status(400).send('invalid');
+      // Log why (never the secret or signature), so a failed delivery can be diagnosed from Render's logs.
+      const reason = err instanceof Error ? err.message : String(err);
+      const headers = Object.keys(req.headers).filter((h) => h.startsWith('x-velo') || h.includes('signature'));
+      console.error(JSON.stringify({ kind: 'webhook_rejected', reason, headers, bytes: payload.length }));
+      if (err instanceof VeloWebhookSignatureVerificationError) return res.status(400).send(`bad signature: ${reason}`);
+      return res.status(400).send(`invalid: ${reason}`);
     }
 
     const key = delivery || event.id;

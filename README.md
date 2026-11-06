@@ -5,7 +5,7 @@ Fuel aid that only buys fuel: each jeepney's card gets a Noir escrow run by its 
 **Live website:** https://pasada-eosin.vercel.app (API: https://pasada-server.onrender.com/api/health; free Render instance, first load after idle can take ~30 s)
 **Demo video (2 min):** https://TODO
 **Pitch deck:** https://TODO
-**Team:** TODO Name (Discord `TODO`), TODO Name (Discord `TODO`)
+**Team:** Christian Angelo Naguio (Discord `trixtaos`), Neil Aldous Biason (Discord `_r1tsuuu`)
 
 ## Problem
 
@@ -115,7 +115,11 @@ docs/              design docs, testnet proof, screenshots
 
 ## Screenshots
 
-TODO: `docs/screenshots/pump.png`, `decisions.png`, `topup.png`.
+Taken from the live site.
+
+| At the pump | Agent decisions | Velo top-up |
+| --- | --- | --- |
+| ![Pump](docs/screenshots/pump.png) | ![Decisions](docs/screenshots/decisions.png) | ![Top-up](docs/screenshots/topup.png) |
 
 ## What's next
 

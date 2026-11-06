@@ -7,6 +7,13 @@ services:
     buildCommand: npm ci
     startCommand: npm start
     healthCheckPath: /api/health
+    # A redeploy clears the in-memory decision log, so pushes that only touch docs or the website don't redeploy.
+    buildFilter:
+      ignoredPaths:
+        - README.md
+        - docs/**
+        - apps/web/**
+        - vercel.json
     envVars:
       - key: NODE_VERSION
         value: 24.22.1

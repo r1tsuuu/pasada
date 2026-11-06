@@ -1,0 +1,30 @@
+{
+  "name": "@pasada/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "dev:fake": "CHAIN_MODE=fake tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "keys": "tsx scripts/generate-keys.ts",
+    "setup:chain": "tsx scripts/setup-chain.ts",
+    "smoke": "tsx scripts/smoke.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@carts1024/velo-sdk": "0.1.0-alpha.4",
+    "@noirx402/agent-sdk": "0.3.0",
+    "@pasada/agent": "*",
+    "@pasada/shared": "*",
+    "@stellar/stellar-sdk": "^16.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "tsx": "^4.19.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21"
+  }
+}

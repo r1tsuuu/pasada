@@ -2,10 +2,10 @@
 
 Fuel aid that only buys fuel: each jeepney's card gets a Noir escrow run by its own AI agent, which decides every fill, pays the station on the spot, and asks the program for a top-up through Velo when it runs low. Built for programs that give fuel aid to public utility vehicle (PUV) drivers.
 
-**Live website:** https://pasada-eosin.vercel.app (API: https://pasada-server.onrender.com/api/health; free Render instance, first load after idle can take ~30 s)
-**Demo video (2 min):** https://TODO
-**Pitch deck:** https://TODO
-**Team:** Christian Angelo Naguio (Discord `trixtaos`), Neil Aldous Biason (Discord `_r1tsuuu`)
+- **Live website:** https://pasada-eosin.vercel.app (API: https://pasada-server.onrender.com/api/health)
+- **Demo video (2 min):** [Demo Video for Pasada](https://drive.google.com/file/d/1DnIZR1mGwsfc6rRD3SmloqUCo-HP3lOL/view?usp=sharing)
+- **Pitch deck:** [Pasada Pitch Deck](https://docs.google.com/presentation/d/1eWoo4x6tbL3IXUoTHaIRT3sdhTHlzqDJ/edit?usp=sharing&ouid=110023954848251532089&rtpof=true&sd=true)
+- **Team:** Christian Angelo Naguio (Discord `trixtaos`), Neil Aldous Biason (Discord `_r1tsuuu`)
 
 ## Problem
 

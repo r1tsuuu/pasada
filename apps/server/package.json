@@ -10,6 +10,7 @@
     "keys": "tsx scripts/generate-keys.ts",
     "setup:chain": "tsx scripts/setup-chain.ts",
     "smoke": "tsx scripts/smoke.ts",
+    "demo": "DEMO_MODE=1 tsx scripts/generate-keys.ts && DEMO_MODE=1 tsx scripts/setup-chain.ts --reset-j3 && DEMO_MODE=1 tsx src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

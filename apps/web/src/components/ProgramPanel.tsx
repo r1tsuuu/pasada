@@ -104,7 +104,7 @@ export function ProgramPanel({ config, state, refresh }: { config: ApiConfig; st
 
       <div>
         <h3 className="font-display text-xl font-bold">Top-up requests</h3>
-        <p className="text-sm text-ink-soft">The agent asks for money through a Velo checkout. Pay it with the treasurer's Testnet wallet.</p>
+        <p className="text-sm text-ink-soft">{config.demo ? 'The agent asks for money through a demo checkout that stands in for Velo. The server signs for the treasurer with a test key.' : "The agent asks for money through a Velo checkout. Pay it with the treasurer's Testnet wallet."}</p>
         <div className="mt-2 flex flex-col gap-2">
           {tranches.length === 0 && <p className="rounded-lg border border-dashed border-line bg-panel p-3 text-sm text-ink-faint">No requests yet. They appear when a jeepney's escrow runs low.</p>}
           {tranches.map((t) => (
@@ -119,10 +119,10 @@ export function ProgramPanel({ config, state, refresh }: { config: ApiConfig; st
               <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
                 {t.status === 'REQUESTED' && t.checkoutUrl && (
                   <a href={t.checkoutUrl} target="_blank" rel="noreferrer" className="rounded-lg bg-ink px-3 py-1.5 font-semibold text-white hover:bg-ink-soft">
-                    Open Velo checkout
+                    {config.demo ? 'Open demo checkout' : 'Open Velo checkout'}
                   </a>
                 )}
-                {t.confirmedVia && <span className="text-ink-soft">Confirmed by Velo {t.confirmedVia === 'webhook' ? 'signed webhook' : 'status check'}</span>}
+                {t.confirmedVia && <span className="text-ink-soft">{config.demo ? 'Confirmed by demo checkout' : `Confirmed by Velo ${t.confirmedVia === 'webhook' ? 'signed webhook' : 'status check'}`}</span>}
                 {t.fundTxHash && (
                   <a className="font-medium text-held underline underline-offset-2" href={txUrl(t.fundTxHash)} target="_blank" rel="noreferrer">
                     Escrow funded tx {shortHash(t.fundTxHash)}
@@ -185,7 +185,7 @@ export function ProgramPanel({ config, state, refresh }: { config: ApiConfig; st
           {(state?.events ?? []).length === 0 && <li className="p-3 text-ink-faint">Events from Noir's contracts and Velo appear here.</li>}
           {(state?.events ?? []).map((e) => (
             <li key={e.id} className="flex flex-wrap items-center gap-x-3 gap-y-0.5 px-3 py-2">
-              <span className={`rounded px-1.5 py-0.5 text-xs font-semibold ${e.source === 'velo' ? 'bg-capped-bg text-capped' : 'bg-held-bg text-held'}`}>{e.source === 'velo' ? 'Velo' : 'Noir'}</span>
+              <span className={`rounded px-1.5 py-0.5 text-xs font-semibold ${e.source === 'velo' ? 'bg-capped-bg text-capped' : 'bg-held-bg text-held'}`}>{e.source === 'velo' ? (config.demo ? 'Demo checkout' : 'Velo') : 'Noir'}</span>
               <span className="font-medium">{e.type}</span>
               {e.vehicleId && <span className="text-ink-soft">{plate(e.vehicleId)}</span>}
               {e.stationId && <span className="text-ink-soft">{stationName(e.stationId).split(' — ')[0]}</span>}

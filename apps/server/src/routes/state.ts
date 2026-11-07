@@ -28,6 +28,7 @@ export function stateRoutes(ctx: AppContext): Router {
   r.get('/api/config', (_req, res) => {
     const body: ApiConfig = {
       mode: ctx.chain.mode,
+      ...(env.DEMO_MODE ? { demo: true } : {}),
       program: {
         name: PROGRAM.name,
         subsidyPerLiter: money(PROGRAM.subsidyStroopsPerLiter),

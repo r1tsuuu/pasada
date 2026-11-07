@@ -16,7 +16,7 @@ export function Header({ config }: { config: ApiConfig | null }) {
             <>
               <span>{config.program.name}</span>
               <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${config.mode === 'fake' ? 'bg-capped-bg text-capped' : 'bg-ok-bg text-ok'}`}>
-                {config.mode === 'fake' ? 'Offline simulation' : 'Stellar Testnet'}
+                {config.mode === 'fake' ? 'Offline simulation' : config.demo ? 'Demo mode · Stellar Testnet' : 'Stellar Testnet'}
               </span>
               <a className="underline-offset-2 hover:underline" href={contractUrl(config.contracts.paymentEscrow)} target="_blank" rel="noreferrer">
                 Noir contracts

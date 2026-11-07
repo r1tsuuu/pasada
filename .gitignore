@@ -4,5 +4,6 @@ dist/
 .env.local
 apps/server/data/*.json
 *.log
+out/
 .DS_Store
 .vercel

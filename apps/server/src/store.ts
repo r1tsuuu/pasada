@@ -7,9 +7,9 @@ import { env } from './env';
 export function createPersistentStore(): PasadaStore {
   const store = new PasadaStore();
   const dir = resolve(env.DATA_DIR);
-  const file = join(dir, env.CHAIN_MODE === 'fake' ? 'state.fake.json' : 'state.json');
+  const file = join(dir, env.DEMO_MODE ? 'state.demo.json' : env.CHAIN_MODE === 'fake' ? 'state.fake.json' : 'state.json');
 
-  if (env.CHAIN_MODE !== 'fake' && existsSync(file)) {
+  if (env.CHAIN_MODE !== 'fake' && !env.DEMO_MODE && existsSync(file)) {
     try {
       store.load(parseSnapshot(readFileSync(file, 'utf8')));
       console.log(`Loaded ${store.decisions.length} decisions from ${file}`);

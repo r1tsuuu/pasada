@@ -23,7 +23,7 @@ export interface CheckoutResult {
 export interface IntentInfo {
   status: IntentStatus;
   amount: string;
-  payerAddress: string | null;
+  payerAddress: string | null; txHash?: string;
 }
 
 export interface VeloPort {
@@ -73,7 +73,7 @@ export class RealVelo implements VeloPort {
 export class FakeVelo implements VeloPort {
   readonly mode = 'fake' as const;
   readonly configured = true;
-  intents = new Map<string, { amount: string; status: IntentStatus; successUrl: string; cancelUrl: string; description: string; payerAddress: string | null }>();
+  intents = new Map<string, { amount: string; status: IntentStatus; successUrl: string; cancelUrl: string; description: string; payerAddress: string | null; txHash?: string }>();
 
   async createCheckout(params: CheckoutParams): Promise<CheckoutResult> {
     const id = `pi_fake_${randomUUID().slice(0, 8)}`;
@@ -84,10 +84,10 @@ export class FakeVelo implements VeloPort {
   async retrieve(intentId: string): Promise<IntentInfo> {
     const i = this.intents.get(intentId);
     if (!i) throw new Error('unknown intent');
-    return { status: i.status, amount: i.amount, payerAddress: i.payerAddress };
+    return { status: i.status, amount: i.amount, payerAddress: i.payerAddress, txHash: i.txHash };
   }
 
-  pay(intentId: string) {
+  async pay(intentId: string) {
     const i = this.intents.get(intentId);
     if (i && i.status === 'created') {
       i.status = 'paid';

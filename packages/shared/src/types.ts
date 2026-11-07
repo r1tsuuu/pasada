@@ -50,6 +50,8 @@ export interface Decision {
   trancheId?: string;
   errorName?: string;
   releasedFromHeldFillId?: string;
+  /** DEMO_MODE seed row: not a real fill and never has a transaction. */
+  sample?: boolean;
 }
 
 export type HeldStatus = 'NEEDS_REVIEW' | 'AWAITING_FUNDS' | 'RELEASED' | 'REJECTED';

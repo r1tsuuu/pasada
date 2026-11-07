@@ -3,9 +3,11 @@ import { jsonLogger, StationAgent, VehicleAgent } from '@pasada/agent';
 import type { PasadaStore } from '@pasada/agent';
 import { PROGRAM } from '@pasada/shared';
 import { env } from './env';
+import { seedDemoData } from './demoSeed';
 import { buildRuntime, seedFakeChain, type Runtime } from './runtime';
 import { createPersistentStore } from './store';
 import { FakeVelo, RealVelo, type VeloPort } from './velo/client';
+import { DemoVelo } from './velo/demoVelo';
 import { TopUps } from './velo/topups';
 
 export interface AppContext extends Runtime {
@@ -41,7 +43,8 @@ export async function createContext(): Promise<AppContext> {
   if (env.CHAIN_MODE === 'fake') await seedFakeChain(rt);
 
   const store = createPersistentStore();
-  const velo: VeloPort = env.CHAIN_MODE === 'fake' ? new FakeVelo() : new RealVelo();
+  if (env.DEMO_MODE) seedDemoData(store);
+  const velo: VeloPort = env.DEMO_MODE ? new DemoVelo(env.DEMO_TREASURER_SECRET, rt.ownerPublicKey) : env.CHAIN_MODE === 'fake' ? new FakeVelo() : new RealVelo();
   const log = jsonLogger;
   const cache = new ReadCache();
 

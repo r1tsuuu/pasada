@@ -1,5 +1,6 @@
 // Builds the chain client and the on-chain identities of the demo jeepneys and stations.
 // Shared by the server and the setup scripts.
+import { createHash } from 'node:crypto';
 import { Keypair } from '@stellar/stellar-sdk';
 import { FakeChain, NoirChain, deviceHashFromUid } from '@pasada/agent';
 import type { ChainPort, StationRuntime, VehicleRuntime } from '@pasada/agent';
@@ -23,10 +24,13 @@ export function buildRuntime(): Runtime {
 
   const chain: ChainPort = fake ? new FakeChain(1200) : new NoirChain({ rpcUrl: env.NOIR_RPC_URL || undefined });
   const ownerSecret = secret('PROGRAM_OWNER_SECRET');
+  const ownerPublicKey = Keypair.fromSecret(ownerSecret).publicKey();
+  // The real cards are registered to the real program wallet, so demo wallets get their own card UIDs.
+  const tagUid = (uid: string) => (env.DEMO_MODE ? createHash('sha256').update(`${uid}:${ownerPublicKey}`).digest('hex').slice(0, 14).toUpperCase() : uid);
 
   const vehicles: VehicleRuntime[] = VEHICLES.map((v) => {
     const agentSecret = secret(AGENT_SECRET[v.id]);
-    return { ...v, deviceHash: deviceHashFromUid(v.tagUid), agentSecret, agentPublicKey: Keypair.fromSecret(agentSecret).publicKey() };
+    return { ...v, tagUid: tagUid(v.tagUid), deviceHash: deviceHashFromUid(tagUid(v.tagUid)), agentSecret, agentPublicKey: Keypair.fromSecret(agentSecret).publicKey() };
   });
 
   const stations: StationRuntime[] = STATIONS.map((s) => {
@@ -37,7 +41,7 @@ export function buildRuntime(): Runtime {
     return { ...s, secret: sec, publicKey: Keypair.fromSecret(sec).publicKey() };
   });
 
-  return { chain, ownerSecret, ownerPublicKey: Keypair.fromSecret(ownerSecret).publicKey(), vehicles, stations };
+  return { chain, ownerSecret, ownerPublicKey, vehicles, stations };
 }
 
 /** Fake mode only: register and fund the demo jeepneys in the in-memory chain, as setup:chain does on Testnet. */

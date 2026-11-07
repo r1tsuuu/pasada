@@ -33,6 +33,7 @@ export interface ApiDecision {
   trancheId?: string;
   errorName?: string;
   releasedFromHeldFillId?: string;
+  sample?: boolean;
 }
 
 export interface ApiHeldFill {
@@ -115,6 +116,7 @@ export interface ApiState {
 
 export interface ApiConfig {
   mode: 'testnet' | 'fake';
+  demo?: boolean;
   program: {
     name: string;
     subsidyPerLiter: ApiMoney;

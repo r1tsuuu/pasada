@@ -13,7 +13,7 @@ export function startPoller(deps: { store: PasadaStore; velo: VeloPort; topups: 
         try {
           const info = await deps.velo.retrieve(t.paymentIntentId);
           if (info.status === 'paid') {
-            await deps.topups.onIntentPaid(t.paymentIntentId, 'poll', { amount: info.amount, payerAddress: info.payerAddress });
+            await deps.topups.onIntentPaid(t.paymentIntentId, 'poll', { amount: info.amount, payerAddress: info.payerAddress, txHash: info.txHash });
           } else if (info.status === 'expired' || info.status === 'cancelled') {
             deps.store.updateTranche(t.id, { status: 'EXPIRED' });
           } else if (info.status === 'failed') {

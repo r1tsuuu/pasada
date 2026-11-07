@@ -46,8 +46,12 @@ function set(name: string, value: string) {
   text = re.test(text) ? text.replace(re, `${name}=${value}`) : `${text.trimEnd()}\n${name}=${value}\n`;
 }
 
+const roles = process.env.DEMO_MODE
+  ? [...ROLES.map((r) => ({ ...r, name: `DEMO_${r.name}` })), { name: 'DEMO_TREASURER_SECRET', label: 'Demo treasurer', fund: true }]
+  : ROLES;
+
 console.log('Pasada Testnet accounts\n');
-for (const role of ROLES) {
+for (const role of roles) {
   const existing = current(role.name);
   let publicKey: string;
   let created = false;

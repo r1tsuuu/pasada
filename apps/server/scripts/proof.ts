@@ -9,6 +9,8 @@ export function txLink(hash: string) {
 }
 
 export function recordProof(what: string, hash: string) {
+  // Demo-mode wallets are throwaway test keys: they are not proof for the README.
+  if (process.env.DEMO_MODE) return console.log(`  ${what}: ${txLink(hash)}`);
   const when = new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila', hour12: false });
   appendFileSync(proofPath, `| ${when} | ${what} | ${txLink(hash)} |\n`);
   console.log(`  ${what}: ${txLink(hash)}`);

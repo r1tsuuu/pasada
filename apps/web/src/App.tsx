@@ -61,7 +61,7 @@ export default function App() {
       <Header config={config} />
       {toast && (
         <div role="status" className="mx-auto mt-4 max-w-[1440px] px-4 md:px-6">
-          <p className="rounded-xl bg-held-bg px-4 py-3 text-[15px] text-held">{toast}</p>
+          <p className="rounded-xl bg-held-bg px-4 py-3 text-[15px] text-held">{config?.demo ? toast.replace('Velo', 'the demo checkout') : toast}</p>
         </div>
       )}
       {error && (

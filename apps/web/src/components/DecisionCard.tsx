@@ -14,6 +14,7 @@ export function DecisionCard({ decision: d, config, highlight }: { decision: Api
         <span className={`rounded-full px-2.5 py-0.5 text-sm font-semibold ${OUTCOME_STYLE[d.outcome]}`}>{OUTCOME_LABEL[d.outcome]}</span>
         <span className="font-display text-lg font-bold">{vehicle?.plate ?? d.vehicleId}</span>
         <span className="text-sm text-ink-soft">at {station?.name ?? d.stationId}</span>
+        {d.sample && <span className="rounded-full bg-paper px-2 py-0.5 text-xs font-semibold text-ink-soft">Sample</span>}
         <span className="ml-auto text-xs text-ink-faint">{timeAgo(d.createdAt)}</span>
       </div>
 
@@ -40,9 +41,11 @@ export function DecisionCard({ decision: d, config, highlight }: { decision: Api
           ) : (
             <span className="text-ink-faint">Station agent claiming…</span>
           ))}
-        <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="ml-auto text-ink-soft underline underline-offset-2">
-          {open ? 'Hide rules checked' : `Rules checked (${d.checks.length})`}
-        </button>
+        {!d.sample && (
+          <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="ml-auto text-ink-soft underline underline-offset-2">
+            {open ? 'Hide rules checked' : `Rules checked (${d.checks.length})`}
+          </button>
+        )}
       </div>
 
       {open && (
